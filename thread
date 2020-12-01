@@ -1,0 +1,67 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Company extends Test{
+	
+	int number;
+	int noOf;
+	void Client() {
+		
+		System.out.println("CLIENT DETAILS");
+		System.out.println("Enter no of clients");
+		Scanner num = new Scanner(System.in);
+		number = num.nextInt();
+		System.out.println("Enter the client names");
+		ArrayList<String> names = new ArrayList<>();
+		Scanner name = new Scanner(System.in);
+		for(int i=0;i<number;i++) {
+			String value=name.next();
+			names.add(value);	
+		}
+		System.out.println(names);
+	}
+void Employee() {
+		
+		System.out.println("EMPLOYEE DETAILS");
+		System.out.println("Enter no of employee");
+		Scanner num = new Scanner(System.in);
+		noOf = num.nextInt();
+		System.out.println("Enter the employee names");
+		ArrayList<String> empNames = new ArrayList<>();
+		Scanner name = new Scanner(System.in);
+		for(int i=0;i<noOf;i++) {
+			String value=name.next();
+			empNames.add(value);	
+		}
+		System.out.println(empNames);
+	}
+}
+
+public class Test extends Thread{
+	public void run() {
+		
+		  System.out.println("Name: "+Thread.currentThread().getName()); 
+		  long id = getId();
+		  int priority = getPriority();
+		  int active = activeCount();
+		  System.out.println("ID: "+id +"  Priority: "+priority+"  Active account number: "+active);
+		  System.out.println("Daemon: "+Thread.currentThread().isDaemon()); 
+		
+	}
+public static void main(String[] args)  { 
+		
+		Company object1 = new Company();
+		Company object2 = new Company();
+	    System.out.println();
+		object1.Client();
+		object1.Employee();
+		
+		System.out.println();
+		object2.setDaemon(true);
+		//object2.run();
+		object2.start();
+		object1.start();
+		
+	}
+
+}
