@@ -1,0 +1,48 @@
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+class Threads implements Runnable {
+	int num;
+	Threads(int number){
+		num=number;
+	}
+	public void run() {
+		try {
+		for(int i=1;i<=num;i++) {
+			 if(i%2==0) {
+				System.out.println(i+" is even");
+			}else {
+				System.out.println(i+" is odd");
+			}
+			 Thread.sleep(100);
+		}
+		System.out.println();
+		}
+		catch(InterruptedException e) 
+        { 
+            e.printStackTrace(); 
+        } 
+		}
+	}
+
+public class ThreadPool {
+	 static final int MIN_T = 2;              
+	  
+	    public static void main(String[] args) 
+	    { 
+	        
+	        Runnable r1 = new Threads(1);
+	        Runnable r2 = new  Threads(2);
+	       Runnable r3 = new Threads(3);
+	       Runnable r4 = new Threads(4);
+	        
+	        ExecutorService pool = Executors.newFixedThreadPool(MIN_T);   
+	         
+	        pool.execute(r1); 
+	        pool.execute(r2); 
+	        pool.execute(r3); 
+	        pool.execute(r4); 
+	       
+	        pool.shutdown(); 
+	    }	          
+}
