@@ -1,0 +1,66 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
+
+ class FutureCallable implements Callable<Integer>
+		{
+		 
+		    private Integer number;
+		    int n1=0,n2=1,n3,i;
+		   int result;
+		    public FutureCallable(Integer number) {
+		        this.number = number;
+		    }
+		   
+		    
+		    public Integer call() throws Exception {
+		    	
+		    	System.out.print(n1+" "+n2);    
+		        
+		    	 for(i=2;i<number;++i)   
+		    	 {    
+		    	  n3=n1+n2;    
+		    	  System.out.print(" "+n3);
+		    	  result = n3;
+		    	  n1=n2;    
+		    	  n2=n3;    
+		    	 }    
+		    	  return result;
+		    	}  
+		}
+public class FutureCall
+{
+      public static void main(String[] args) 
+      {
+          ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
+           
+          ArrayList<Future<Integer>> resultList = new ArrayList<>();
+       
+          System.out.println("Enter the number");
+	    	Scanner sc = new Scanner(System.in);
+	    	int number=sc.nextInt();
+              FutureCallable call = new FutureCallable(number);
+             
+              Future<Integer> result = executor.submit(call);
+              resultList.add(result);
+        
+           
+          for(Future<Integer> future : resultList)
+          {
+                try
+                {
+                	System.out.println();
+                    System.out.println("\nResult is" + " - " + future.get() + "; and Task done is " + future.isDone());
+                } 
+                catch (InterruptedException | ExecutionException e) 
+                {
+                    e.printStackTrace();
+                }
+          }
+            executor.shutdown();
+      }
+}
